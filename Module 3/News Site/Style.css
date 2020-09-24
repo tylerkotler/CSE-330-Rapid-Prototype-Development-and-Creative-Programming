@@ -1,0 +1,158 @@
+body{
+    background-color: #6baddf;
+    color: white;
+    text-align: center;  
+    font-family: 'Poppins', sans-serif; 
+}
+h1{
+    font-size: 300%;
+    text-shadow: -1px -1px 0 #d2b486,
+    1px -1px 0 #d2b486,
+    -1px 1px 0 #d2b486,
+    1px 1px 0 #d2b486; 
+    text-align: center; 
+} 
+ 
+h2{
+  font-size: 200%;
+    text-shadow: -1px -1px 0 #d2b486,
+    1px -1px 0 #d2b486,
+    -1px 1px 0 #d2b486,
+    1px 1px 0 #d2b486; 
+    text-align: center;  
+} 
+.firstdiv{
+  text-align: center;
+  color: white;
+  height: 240px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 4%; 
+  width: 25%;
+  background-color: #01193f; 
+  padding: 10px;
+  font-size: initial;
+  border: #d2b486;
+  border-style: groove;
+}
+.adddiv{
+  text-align: center;
+  color: white;
+  height: 525px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 4%; 
+  width: 55%;
+  background-color: #01193f; 
+  padding: 10px;
+  font-size: initial;
+  border: #d2b486;
+  border-style: groove;
+}
+
+.button{ 
+	background:linear-gradient(to bottom, #d2b486 5%, #d2b486 100%);
+	background-color:#d2b486;
+	border-radius:10px;
+	border:1px solid #000000;
+	display:inline-block;
+	cursor:pointer;
+	color: white;
+	font-family:Arial;
+	font-size:10px;
+	padding:5px 10px;
+  text-decoration:none;
+  font-size: initial;
+  text-shadow: -0.9px -0.9px 0 #01193f,
+  0.9px -0.9px 0 #01193f,
+  -0.9px 0.9px 0 #01193f,
+  0.9px 0.9px 0 #01193f; 
+  /*Code adapted from bestcssbuttongenerator.com*/
+}
+.logoutbutton{
+  float: right;
+  text-align: right;
+  object-position: right;
+}
+
+.viewbutton{
+  float: left;
+  text-align: left;
+  object-position: left;
+}
+
+.newsdiv{
+  display: inline-block;
+  text-align: left;
+  color: white;
+  margin-top: 4%; 
+  width: 90%;
+  background-color: #01193f; 
+  padding: 10px;
+  font-size: initial;
+  border: #d2b486;
+  border-style: groove;
+}
+
+.articlebutton{
+  background-color: #01193f;
+  font-size: 20px;
+  color: white;
+  text-align: left;
+  outline: none;
+}
+
+.articledisplay{
+  text-align: left;
+}
+.herebutton{
+  border: none;
+  background-color: #6baddf;
+  text-emphasis-color: black;
+  color: black;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: initial;
+}
+.deletebutton{
+  border: none;
+  background-color: #6baddf;
+  text-emphasis-color: black;
+  color: black;
+  cursor: pointer;
+  font-size: initial;
+  border-radius:10px;
+  border:1px solid #000000;
+  padding:5px 10px;
+}
+.articlebutton{
+  border: none;
+  background-color: #01193f;
+  color: white;
+  cursor: pointer;
+  font-size: 25px;
+  text-shadow: -0.7px -0.7px 0 #d2b486,
+  0.7px -0.7px 0 #d2b486,
+  -0.7px 0.7px 0 #d2b486,
+  0.7px 0.7px 0 #d2b486; 
+}
+
+.textarea{
+  width:500px;
+  height:280px;
+  white-space: pre-wrap;
+}
+
+.comments{
+  font-size: 200%;
+  text-shadow: -1px -1px 0 #d2b486,
+  1px -1px 0 #d2b486,
+  -1px 1px 0 #d2b486,
+  1px 1px 0 #d2b486; 
+  text-align: center;
+} 
+
+.small{
+  font-size: 12px;
+  background-color: #6baddf;
+}
