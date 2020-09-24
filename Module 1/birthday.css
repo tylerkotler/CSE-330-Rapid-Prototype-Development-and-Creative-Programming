@@ -1,0 +1,19 @@
+body{background-color: gold;
+     text-align:left;
+     font-family: Arial, Helvetica, sans-serif;
+     margin-top: 20px;
+     margin-bottom: 40px;
+     margin-left: 30px;
+     margin-right: 30px;
+     font-size: 28px;
+     color:royalblue;}
+p.top{color: purple;
+     font-size: 35px;
+     font-family:cursive;
+     text-align:center}
+p.main{color: magenta;
+     font-size: 32px;
+     text-indent: 15px;
+     font-weight: 400;
+     text-align:center}
+        

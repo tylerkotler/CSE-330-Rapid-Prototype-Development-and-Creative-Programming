@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Birthday Card</title>
+    <link rel="stylesheet"
+     type="text/css" href="birthday.css">
+</head>
+<body>
+    Dear Grandpa,<br><br>
+    <p class = "top"> HAPPY BIRTHDAY!! </p><br>
+    <p class = "main"> I hope you have the best day! 
+         Looking forward to seeing you soon! </p> <br><br>
+    Love,<br>
+    <ul>
+        <li>Tyler</li>
+        <li>Lance</li>
+        <li>Lauren</li>
+        <li>Jordana</li>
+        </ul><br><br><br>
+    <img src='balloon.jpg' alt='picture of balloon'/><br><br>
+    <div class="embed">
+        <iframe
+            title="Experience"
+            id="ha-form--iframe-tag-jleWqQ5N-2ep4JgYWIWboZp66CjXIv"
+            allow="microphone; camera;"
+            width="100%"
+            height="660" allowtransparency="true"
+            frameBorder="0"
+            style="border:none;min-width:320px;max-width:400px">
+        </iframe>
+        <script type="text/javascript">
+            (function() {
+            var windowId = '2ep4JgYWIWboZp66CjXIv';
+            var iframeSrc = 'https://alava-ha-15673-embed-wi-gjkfn5.herokuapp.com/e/jleWqQ5N/s5n3NzprBd';
+            var node = document.getElementById('ha-form--iframe-tag-jleWqQ5N-2ep4JgYWIWboZp66CjXIv');
+            var heightSetted = node.height !== '0';
+            var hostParams = window.location.search.replace('?', '');
+            var urlParams = [hostParams, 'transparent_embed=true'].join('&');
+            var handShake = function(node) {
+                return function() {
+                node.contentWindow.postMessage({ type: 'ha-form.HANDSHAKE', windowId }, '*');
+                };
+            };
+            node.src = urlParams ? iframeSrc + '?' + urlParams : iframeSrc;
+            node.onload = handShake(node);
+            })();
+        </script>
+    </div>
+</body>
+</html>
