@@ -1,0 +1,52 @@
+body{background-color: #BFD8D2;
+    text-align:center;
+    font-family: 'Courier New', Courier, monospace;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    margin-left: 30px;
+    margin-right: 30px;
+    font-size: 160%;
+    color: #DF744A; 
+    border: 30px #FEDCD2;
+}
+p.test{
+    text-align:center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 125%;
+    color: #DF744A;  
+}
+.logindiv{
+    align-items: center;
+    text-align: center;
+    background-color: #FEDCD2; 
+    border-radius: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+.filesdiv{
+    align-items: center;
+    text-align: center;
+    background-color: #BFD8D2; 
+    border-radius: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top:20px;
+    margin-bottom:20px; 
+}
+.button{
+    
+	background:linear-gradient(to bottom, #DCB239 5%, #DCB239 100%);
+	background-color:#DCB239;
+	border-radius:10px;
+	border:1px solid #000000;
+	display:inline-block;
+	cursor:pointer;
+	color:#000000;
+	font-family:Arial;
+	font-size:10px;
+	padding:5px 10px;
+	text-decoration:none;
+    /*Code adapted from bestcssbuttongenerator.com*/
+}
