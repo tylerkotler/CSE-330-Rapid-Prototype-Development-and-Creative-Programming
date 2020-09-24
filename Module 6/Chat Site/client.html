@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JT Chat</title>
+    <style>
+        html {
+            background-color: #6ea5ee;
+        }
+
+        div#head1 {
+            text-align: center;
+            font-size: xx-large;
+            background-color: #f0e586;
+            color: #000000;
+            border: #000000;
+            border-radius: 25px;
+            border-style: solid;
+            font-weight: bold;
+            padding-top: 7px;
+            padding-bottom: 7px;
+        }
+
+        div#head2 {
+            font-size: x-large;
+            font-weight: normal;
+        }
+
+        div#body1 {
+            text-align: center;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            background-color: #6eeeb7;
+            color: #000000;
+            border: #000000;
+            border-radius: 25px;
+            border-style: solid;
+        }
+
+        .button {
+            background-color: #f0e586;
+            border-radius: 15px;
+            border: 2px solid #000000;
+            display: inline-block;
+            cursor: pointer;
+            color: #000000;
+            font-family: Trebuchet MS;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 12px;
+            text-decoration: none;
+            /*Code adapted from bestcssbuttongenerator.com*/
+        }
+
+        div#button2 {
+            background-color: #6eeeb7;
+            border-radius: 15px;
+            border: 5px solid #000000;
+            cursor: pointer;
+            color: #000000;
+            font-family: Trebuchet MS;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 2px 12px;
+            text-decoration: none;
+            position: fixed;
+            margin-top: 25px;
+            margin-left: 15px;
+
+            /*Code adapted from bestcssbuttongenerator.com*/
+        }
+
+        div#chatlog {
+            padding-left: 35px;
+            font-size: small;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            background-color: #ee6ea5;
+            color: #000000;
+            border: #000000;
+            border-radius: 25px;
+            box-sizing: content-box;
+            width: 45%;
+            border-style: solid;
+            padding-bottom: 15px;
+            padding-right: 15px;
+            float: left;
+            font-size: large;
+        }
+
+        div#chatHead {
+            padding-top: 15px;
+            padding-left: 50px;
+            font-size: x-large;
+        }
+
+        div#currentMembers {
+            padding-left: 35px;
+            font-size: small;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            background-color: #ee6ea5;
+            color: #000000;
+            border: #000000;
+            border-radius: 25px;
+            box-sizing: content-box;
+            width: 20%;
+            border-style: solid;
+            padding-bottom: 15px;
+            padding-right: 15px;
+            float: right;
+            margin-right: 20px;
+        }
+
+        div#membersHead {
+            padding-top: 15px;
+            padding-left: 30px;
+            font-size: large;
+        }
+
+        div#currentRooms {
+            padding-left: 35px;
+            font-size: small;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            background-color: #ee6ea5;
+            color: #000000;
+            border: #000000;
+            border-radius: 25px;
+            box-sizing: content-box;
+            width: 20%;
+            border-style: solid;
+            padding-bottom: 15px;
+            padding-right: 15px;
+            float: right;
+            font-size: large;
+        }
+
+        div#roomsHead {
+            padding-top: 15px;
+            font-size: large;
+        }
+    </style>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var user = prompt("please enter your username", "input here");
+        var users = [];
+        var current_chat = "main_room";
+        var socketio = io.connect();
+        var owners = {};
+        var rooms = ["main_room"];
+        var passwords = {};
+        var bans = {};
+        var map = {};
+        //called when a message is sent to a chat
+        socketio.on("message_to_client", function (data) {
+            //Append an HR thematic break and the escaped HTML of the new message
+            document.getElementById("chatlog").appendChild(document.createElement("br"));
+            document.getElementById("chatlog").appendChild(document.createTextNode(data.username + ": " + data.message));
+        });
+        //called when a user connects to the server
+        socketio.on("connect", function () {
+            current_chat = "main_room";
+            passwords["main_room"] = "";
+            rooms.push("main_room");
+            socketio.emit('new_user', { username: user, current: current_chat });
+            map[user] = current_chat;
+        });
+        //called when a user creates a room
+        socketio.on("createdRoom", function (data) {
+            document.getElementById("chatlog").appendChild(document.createElement("br"));
+            document.getElementById("chatlog").appendChild(document.createTextNode("a new room called: " + data.roomname + " was created by: " + data.owner));
+            document.getElementById("currentRooms").appendChild(document.createElement("br"));
+            document.getElementById("currentRooms").appendChild(document.createTextNode(data.roomname));
+        });
+        //called when a user joins a different room and shows to others the user has joined their current room
+        socketio.on("joinedChat", function (data) {
+            document.getElementById("chatlog").appendChild(document.createElement("br"));
+            document.getElementById("chatlog").appendChild(document.createTextNode(data.username + " has joined the chat"));
+            current_chat = data.room;
+            map[user] = current_chat;
+        });
+        //called when a user joins a different room and shows to others the user has left their current room
+        socketio.on("leftChat", function (data) {
+            document.getElementById("chatlog").appendChild(document.createElement("br"));
+            document.getElementById("chatlog").appendChild(document.createTextNode(data.username + " has left the chat."));
+        });
+        //called when a user is kicked from a room
+        socketio.on("kickHim2", function (data) {
+            var kicked = data.kicked;
+            var kicker = data.kicker;
+            var room = data.room;
+            if (kicked == user) {
+                alert("I'm sorry, you have been kicked from the chat " + room + " by " + kicker);
+                current_chat = "main_room";
+                map[user] = current_chat;
+                document.getElementById("chatlog").appendChild(document.createElement("br"));
+                document.getElementById("chatlog").appendChild(document.createTextNode("You have been kicked from the chat by " + data.kicker + ". Click on the button at the top to join the main room or join a diiferent room in the options menu."));
+            } else {
+                document.getElementById("chatlog").appendChild(document.createElement("br"));
+                document.getElementById("chatlog").appendChild(document.createTextNode(data.kicked + " has been kicked from the chat by " + data.kicker));
+            }
+        });
+        //called when a user is banned from a room
+        socketio.on("banHim2", function (data) {
+            var banned = data.banned;
+            var banner = data.banner;
+            var room = data.room;
+            bans[room] = banned;
+            if (banned == user) {
+                alert("I'm sorry, you have been banned from the chat " + room + " by " + banner);
+                current_chat = "main_room";
+                map[user] = current_chat;
+                socketio.emit("bannedAndKicked", { room: room, room2: current_chat });
+                document.getElementById("chatlog").appendChild(document.createElement("br"));
+                document.getElementById("chatlog").appendChild(document.createTextNode("You have been banned from the chat by " + data.banner + ". Click on the button at the top to join the main room or join a diiferent room in the options menu."));
+            } else {
+                document.getElementById("chatlog").appendChild(document.createElement("br"));
+                document.getElementById("chatlog").appendChild(document.createTextNode(data.banned + " has been banned from the chat by " + data.banner));
+            }
+        });
+        //called when a user transitions ownership to a new user
+        socketio.on("changeOwner2", function (data) {
+            var room = data.room;
+            var newOwner = data.newOwner;
+            var oldOwner = data.oldOwner;
+            if (user == newOwner) {
+                alert(oldOwner + " has given you control of the room " + room);
+            }
+            document.getElementById("chatlog").appendChild(document.createElement("br"));
+            document.getElementById("chatlog").appendChild(document.createTextNode(oldOwner + " has been given ownership of the chat to " + newOwner));
+        });
+        //called when a user changes the password of a private room
+        socketio.on("changePass2", function (data) {
+            var room = data.room;
+            var owner = data.owner;
+            var newPass = data.newPass;
+            if (user == owner) {
+                alert("Congrats, you have changed the password of the room " + room + " to " + newPass);
+            }
+        });
+        //called when a user sends a direct message
+        socketio.on("message_to_one2", function (data) {
+            var username = data.username;
+            var message = data.message;
+            var receiver = data.receiver;
+            if (user == username || user == receiver) {
+                document.getElementById("chatlog").appendChild(document.createElement("br"));
+                document.getElementById("chatlog").appendChild(document.createTextNode(data.username + " (private): " + data.message));
+            }
+        });
+        //called when a user joins a new room (join room, logs on, kicked or banned) to update the members of the current users chat
+        socketio.on("showMembers", function (data) {
+            current_chat = data.room;
+            var room_map = data.users;
+            document.getElementById("currentMembers").style.fontSize = "large";
+            document.getElementById("currentMembers").style.paddingTop = "15px";
+            document.getElementById("currentMembers").innerHTML = "Members of the " + current_chat + " chat: " + "<br>";
+            for (var i in room_map) {
+                if (room_map[i] == current_chat) {
+                    document.getElementById("currentMembers").innerHTML += i + "<br>";
+                }
+            }
+        });
+        //called when the send button is pressed to all people
+        function sendMessage() {
+            var msg = document.getElementById("message_input").value;
+            document.getElementById("message_input").value = "";
+            socketio.emit("message_to_server", { username: user, message: msg });
+        }
+        //called when the create room button is pressed
+        function createRoom() {
+            var name = document.getElementById("roomName").value;
+            var password = document.getElementById("roomPass").value;
+            document.getElementById("roomName").value = "";
+            document.getElementById("roomPass").value = "";
+            for (var i in rooms) {
+                if (rooms[i] == name) {
+                    alert("A room with this name is already in existance");
+                    return;
+                }
+            }
+            owners[name] = user;
+            passwords[name] = password;
+            rooms.push(name);
+            socketio.emit("createRoom", { roomName: name, roomPass: password, owner: user });
+        }
+        //called when the join room button is pressed
+        function joinRoom() {
+            var name = document.getElementById("roomName2").value;
+            var password = document.getElementById("roomPass2").value;
+            document.getElementById("roomName2").value = "";
+            document.getElementById("roomPass2").value = "";
+            if (bans[name] == user) {
+                console.log(user + " has been banned from the chat: " + name + " already.");
+                alert("Sorry, you have been banned from this room");
+                return;
+            }
+            socketio.emit("joinChat", { name: name, password: password, user: user })
+        }
+        //called when the send private message button is pressed
+        function sendPrivateMessage() {
+            var receiver = document.getElementById("username").value;
+            var message = document.getElementById("message_input2").value;
+            document.getElementById("username").value = "";
+            document.getElementById("message_input2").value = "";
+            socketio.emit("message_to_one", { username: user, message: message, receiver: receiver });
+        }
+        //called when the kick user button is pressed
+        function kick() {
+            var kicked = document.getElementById("username2").value;
+            var room = document.getElementById("roomName3").value;
+            document.getElementById("username2").value = "";
+            document.getElementById("roomName3").value = "";
+            var kicker = user;
+            if (kicker == kicked) {
+                alert("You cannot kick yourself");
+                return;
+            }
+            socketio.emit("kickHim", { kicked: kicked, kicker: kicker, room: room })
+        }
+        //called when the ban user button is pressed
+        function ban() {
+            var banned = document.getElementById("username3").value;
+            var room = document.getElementById("roomName4").value;
+            document.getElementById("username3").value = "";
+            document.getElementById("roomName4").value = "";
+            var banner = user;
+            if (banner == banned) {
+                alert("You cannot ban yourself");
+                return;
+            }
+            socketio.emit("banHim", { banned: banned, banner: banner, room: room })
+        }
+        //called when the change password button is pressed
+        function password_change() {
+            var owner = user;
+            var room = document.getElementById("roomName6").value;
+            var newPass = document.getElementById("newPass").value;
+            document.getElementById("newPass").value = "";
+            document.getElementById("roomName6").value = "";
+            if (owner != owners[room]) {
+                alert("Sorry, you are not the owner and cannot change this");
+                return;
+            }
+            else if (newPass == passwords[room]) {
+                alert("This is already the password.");
+                return;
+            }
+            else {
+                passwords[room] = "";
+                passwords[room] = newPass;
+                socketio.emit("changePass", { room: room, owner: owner, newPass: newPass })
+            }
+        }
+        //called when the change owner button is pressed
+        function owner_change() {
+            var oldOwner = user;
+            var room = document.getElementById("roomName5").value;
+            var newOwner = document.getElementById("newOwner").value;
+            document.getElementById("newOwner").value = "";
+            document.getElementById("roomName5").value = "";
+            if (oldOwner != owners[room]) {
+                alert("Sorry, you are not the owner and cannot change this");
+                return;
+            }
+            else if (newOwner == oldOwner) {
+                alert("You are already the owner of this room");
+                return;
+            }
+            else {
+                owners[room] = "";
+                owners[room] = newOwner;
+                socketio.emit("changeOwner", { room: room, newOwner: newOwner, oldOwner: oldOwner })
+            }
+        }
+        //called when the join main room button is pressed
+        function joinRoom2() {
+            var name = "main_room";
+            var password = "";
+            socketio.emit("joinChat", { name: name, password: password, user: user })
+        }
+
+
+    </script>
+</head>
+
+<body>
+    <div id="button2" onclick="joinRoom2()">Join Main Chat</div>
+    <div id="head1">
+        <script>
+            document.getElementById('head1').innerHTML = "JT Chat" + "<br>";
+        </script>
+        <div id="head2">
+            <script>
+                document.getElementById('head2').innerHTML = "Username: " + user;
+            </script>
+        </div>
+    </div>
+    <br>
+    <!-- Buttons for the user to press with text to type in for each -->
+    <div id="body1">
+        <br>
+        Send a public message:
+        <input type="text" id="message_input" placeholder="Message" />
+        <div class="button" onclick="sendMessage()">Send</div>
+        <br>
+        Send a private message:
+        <input type="text" id="username" placeholder="Username" />
+        <input type="text" id="message_input2" placeholder="Message" />
+        <div class="button" onclick="sendPrivateMessage()">Send</div>
+        <br>
+        Create a chatroom here:
+        <input type="text" id="roomName" placeholder="Room name" />
+        <input type="text" id="roomPass" placeholder="Password" />
+        <div class="button" onclick="createRoom()">Create</div>
+        <br>
+        Join a chatroom here:
+        <input type="text" id="roomName2" placeholder="Room name" />
+        <input type="text" id="roomPass2" placeholder="Password" />
+        <div class="button" onclick="joinRoom()">Join</div>
+        <br>
+        Kick a user:
+        <input type="text" id="username2" placeholder="Username" />
+        <input type="text" id="roomName3" placeholder="Room name" />
+        <div class="button" onclick="kick()">Kick</div>
+        <br>
+        Ban a user:
+        <input type="text" id="username3" placeholder="Username" />
+        <input type="text" id="roomName4" placeholder="Room name" />
+        <div class="button" onclick="ban()">Ban</div>
+        <br>
+        Change the owner:
+        <input type="text" id="roomName5" placeholder="Room name" />
+        <input type="text" id="newOwner" placeholder="Username" />
+        <div class="button" onclick="owner_change()">Change</div>
+        <br>
+        Change the password:
+        <input type="text" id="roomName6" placeholder="Room name" />
+        <input type="text" id="newPass" placeholder="Password" />
+        <div class="button" onclick="password_change()">Change</div>
+        <br>
+        <br>
+    </div>
+    <br>
+    <div id="chatlog">
+        <div id="chatHead">Chat:</div>
+    </div>
+    <div id="currentRooms">
+        <div id="roomsHead">Rooms:</div>
+        main_room
+    </div>
+    <div id="currentMembers">
+        <div id="membersHead">Members of this room:</div>
+    </div>
+    <br>
+
+</body>
+
+</html>

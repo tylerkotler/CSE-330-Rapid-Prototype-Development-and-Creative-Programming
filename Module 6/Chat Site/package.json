@@ -1,0 +1,19 @@
+{
+  "name": "module6-group-module6-464470-466632",
+  "version": "1.0.0",
+  "description": "module 6 group",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cse330-spring-2020/module6-group-module6-464470-466632.git"
+  },
+  "author": "Josh Wertheim, Tyler Kotler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cse330-spring-2020/module6-group-module6-464470-466632/issues"
+  },
+  "homepage": "https://github.com/cse330-spring-2020/module6-group-module6-464470-466632#readme"
+}
