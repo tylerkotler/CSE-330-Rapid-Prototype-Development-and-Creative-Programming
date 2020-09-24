@@ -1,0 +1,68 @@
+<!-- template for voting on a poll -->
+{% extends "poll/base.html" %}
+
+{% block main %}
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Provide Your Answer</h3>
+            </div>
+
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2>{{ poll.question }}</h2>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <hr />
+
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="poll" value="option1" required>
+                                        {{ poll.option_one }}
+                                    </label> &nbsp;
+                                    <label>
+                                        <input type="radio" name="poll" value="option2">
+                                        {{ poll.option_two }}
+                                    </label> &nbsp;
+                                    <label>
+                                        <input type="radio" name="poll" value="option3">
+                                        {{ poll.option_three }}
+                                    </label> &nbsp;
+                                    <label>
+                                        <input type="radio" name="poll" value="option4">
+                                        {{ poll.option_four }}
+                                    </label> &nbsp;
+                                </div>
+                            </div>
+
+                            <hr />
+                            <!-- different cases for if a user has voted or is/is not logged in -->
+                            {% if poll.author == user %}
+                                <div><label>You can't vote in your own poll!</label></div>
+                            {% elif voted == True %}
+                                <div><label>Sorry, you've already voted!</label></div>
+                            {% elif user.is_authenticated %}
+                                <button type="submit" class="btn btn-info" href="{% url 'home' %}">
+                                    Submit
+                                </button>
+                            {% else %}
+                                <div><label>Log in to submit a reponse!</label></div>
+                            {% endif %}
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
