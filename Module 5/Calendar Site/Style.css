@@ -1,0 +1,60 @@
+table{
+    border: 1px solid gray;
+    margin-left: auto;
+    margin-right: auto;
+    width: 98%;
+    background-color: #daac98;
+}
+td{
+    border: 1px solid gray;
+    width: 14%;
+    min-height: 50px;
+    height: 50px;
+    text-align: left;
+    vertical-align: top;
+}
+th{
+    border: 2px solid gray;
+    width: 14%;
+    height: 30px;
+    text-align: left;
+    font-size: 20px;
+}
+#prevnextdiv{
+    text-align: center;
+    object-position: center;
+}
+body{
+    background-color: #B0B8B4FF;
+}
+h1{
+    font-size: 175%;
+    text-shadow: -1px -1px 0 #dfd1bb,
+    1px -1px 0 #dfd1bb,
+    -1px 1px 0 #dfd1bb,
+    1px 1px 0 #dfd1bb;
+    text-align: center; 
+} 
+#addeventdiv{
+    text-align: center;
+    object-position: center;
+}
+#addeventinfodiv{
+    background-color: #daac98;
+}
+.eventbutton{
+  border: none;
+  text-emphasis-color: black;
+  color: black;
+  background-color: rgb(218, 172, 152);
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: initial;
+}
+#displayeventdiv{
+    background-color: #daac98;
+}
+#editeventinfodiv{
+    background-color: #daac98;
+}
+

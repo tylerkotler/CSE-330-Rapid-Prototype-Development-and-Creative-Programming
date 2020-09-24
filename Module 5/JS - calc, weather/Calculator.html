@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Calculator using javascript</title>
+</head>
+<body> 
+    <P>
+        4 Function Calculator   
+    </P>
+    <form>
+        <P>
+            <label for="firstnuminput">First Number:</label>
+            <input type="text" name="num1" id="firstnuminput"/>
+        </p>
+        <P>
+            <label for="secondnuminput">Second Number:</label>
+            <input type="text" name="num2" id="secondnuminput"/>
+        </p>
+        <P>
+            <strong>Operation:</strong>
+            <input type="radio" name="operation" value="plus" id="plusinput" /> 
+                <label for="plusinput"> + </label>
+            <input type="radio" name="operation" value="minus" id="minusinput" /> 
+                <label for="minusinput"> - </label>
+            <input type="radio" name="operation" value="multiply" id="multiplyinput" /> 
+                <label for="multiplyinput"> x </label>
+            <input type="radio" name="operation" value="divide" id="divideinput" /> 
+                <label for="divideinput"> / </label>
+    </form>
+    <div id="resultdiv">
+
+    </div>
+</body> 
+<script>
+    let optype = "";
+    let bool = false;
+    const operation = function(){
+        let num1 = parseInt(document.getElementById("firstnuminput").value);
+        let num2 = parseInt(document.getElementById("secondnuminput").value);
+        if(bool==false || num1==null || num2==null){
+            return;
+        }
+        let result = 0;
+        if(!isNaN(num1) && !isNaN(num2)){  
+            if(optype.localeCompare("+")==0){
+                result = num1+num2;
+            }
+            else if(optype.localeCompare("-")==0){
+                result = num1-num2;
+            }
+            else if(optype.localeCompare("x")==0){
+                result = num1*num2;
+            }
+            else{
+                if(num2==0){
+                    result = "undefined";
+                }
+                else{
+                    result = num1/num2;
+                }
+            }
+            if(result > Number.MAX_SAFE_INTEGER || result < Number.MIN_SAFE_INTEGER){
+                result = "infinity";
+            }
+            document.getElementById("resultdiv").textContent = "Result: "+result;
+        }
+        else{
+            document.getElementById("resultdiv").textContent = "Bad input - enter two numbers";
+        } 
+    }
+    document.getElementById("plusinput").addEventListener("click", function(event){
+        bool = true;
+        optype = "+";
+        operation();
+    }, false);
+    document.getElementById("minusinput").addEventListener("click", function(event){
+        bool = true;
+        optype = "-";
+        operation();
+    }, false);
+    document.getElementById("multiplyinput").addEventListener("click", function(event){
+        bool = true;
+        optype = "x";
+        operation();
+    }, false);
+    document.getElementById("divideinput").addEventListener("click", function(event){
+        bool = true;
+        optype = "/";
+        operation();
+    }, false);
+    document.getElementById("firstnuminput").addEventListener("change", operation, false);
+    document.getElementById("secondnuminput").addEventListener("change", operation, false);
+
+</script>
+</html>
